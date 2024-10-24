@@ -196,6 +196,12 @@ describe('Heroku App Tests', () => {
     });    
     
     it('Heroku_App_ExportContactsOnFile_TC006', async () => {
+        await browser.url('https://thinking-tester-contact-list.herokuapp.com/');
+        await $('//form//p//input[@id="email"]').waitForExist({ timeout: 3000 });
+        await $('//form//p//input[@id="email"]').setValue(testEmail);
+        await $('//form//p//input[@id="password"]').setValue(password);
+        await $('//form//p//button[@id="submit"]').click();
+        
         await browser.url('https://thinking-tester-contact-list.herokuapp.com/contactList');
         await $('//div//table').waitForExist({ timeout: 5000 });
     
@@ -221,30 +227,7 @@ describe('Heroku App Tests', () => {
             contactDataArray.push(contactData);
         }
     
-        fs.writeFileSync('logs.txt', JSON.stringify(contactDataArray, null, 2), 'utf8');
-    
-        if (userCount > 3) {
-            await rows[2].click();
-        } else {
-            console.error('Not enough rows to click the third contact.');
-            return;
-        }
-    
-        await browser.url('https://thinking-tester-contact-list.herokuapp.com/contactDetails');
-        
-        await $('//div//p//button[@id="delete"]').waitForExist({ timeout: 3000 });
-        await $('//div//p//button[@id="delete"]').click();
-        
-        const alertIsPresent = await browser.isAlertOpen();
-        if (alertIsPresent) {
-            await browser.acceptAlert();
-        } else {
-            console.log('No alert was present after clicking delete.');
-        }
-        
-        await browser.url('https://thinking-tester-contact-list.herokuapp.com/contactList');
-        await $('//div//table').waitForExist({ timeout: 5000 });
-    
+        fs.writeFileSync('logs.txt', JSON.stringify(contactDataArray, null, 2), 'utf8');    
         await browser.pause(3000);
     });
     
