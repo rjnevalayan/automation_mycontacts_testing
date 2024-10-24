@@ -10,11 +10,6 @@ describe('Heroku App Tests', () => {
         const generateNumCode = moment().format('YYYYMMDDHHmm');
         testEmail = `test_${generateNumCode}04@gmail.com`;
         password = `testing;`
-        await browser.url('https://thinking-tester-contact-list.herokuapp.com/');
-        await $('//form//p//input[@id="email"]').waitForExist({ timeout: 3000 });
-        await $('//form//p//input[@id="email"]').setValue(testEmail);
-        await $('//form//p//input[@id="password"]').setValue(password);
-        await $('//form//p//button[@id="submit"]').click();
     });
 
     it('Heroku_App_SignUp_TC001', async () => {
